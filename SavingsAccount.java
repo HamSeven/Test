@@ -2,17 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package test_d210231c;
+package bank;
+
 
 public class SavingsAccount extends BankAccount {
-  private double interestRate;
+    private double interestRate;
 
-  public SavingsAccount(int accountNumber, double balance, String accountHolderName, double interestRate) {
-    super(accountNumber, balance, accountHolderName);
-    this.interestRate = interestRate;
-  }
+    public SavingsAccount(String accountNumber, String accountHolder, double interestRate) {
+        super(accountNumber, accountHolder);
+        this.interestRate = interestRate;
+    }
 
-  public void calculateInterest() {
-    this.balance += this.balance * this.interestRate;
-  }
+        public double getInterestRate() {
+        return interestRate;
+    }
+    
+    public double calculateInterest() {
+        return getBalance() * interestRate;
+    }
+    
+    public void addInterest() {
+        double interest = calculateInterest();
+        deposit(interest);
+    }
 }
+

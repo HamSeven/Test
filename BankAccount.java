@@ -2,46 +2,47 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package test_d210231c;
+package bank;
+
 
 public class BankAccount {
-  private int accountNumber;
-  public double balance;
-  private String accountHolderName;
+    private String accountNumber;
+    private double balance;
+    private String accountHolder;
 
-  public BankAccount(int accountNumber, double balance, String accountHolderName) {
-    this.accountNumber = accountNumber;
-    this.balance = balance;
-    this.accountHolderName = accountHolderName;
-  }
-
-  public void deposit(double amount) {
-    this.balance += amount;
-  }
-
-  public void withdraw(double amount) {
-    if (amount > this.balance) {
-      throw new IllegalArgumentException("Insufficient funds");
+    public BankAccount(String accountNumber, String accountHolder) {
+        this.accountNumber = accountNumber;
+        this.balance = 0;
+        this.accountHolder = accountHolder;
     }
 
-    this.balance -= amount;
-  }
+    public void deposit(double amount) {
+        balance += amount;
+    }
 
-  public int getAccountNumber() {
-    return this.accountNumber;
-  }
+    public void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+        } else {
+            System.out.println("Insufficient funds!");
+        }
+    }
 
-  public double getBalance() {
-    return this.balance;
-  }
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 
-  public String getAccountHolderName() {
-    return this.accountHolderName;
-  }
+    public double getBalance() {
+        return balance;
+    }
 
-  public void displayAccountInformation() {
-    System.out.println("Account number: " + this.accountNumber);
-    System.out.println("Balance: " + this.balance);
-    System.out.println("Account holder name: " + this.accountHolderName);
-  }
+    public String getAccountHolder() {
+        return accountHolder;
+    }
+
+    public void displayInfo() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Account Holder: " + accountHolder);
+        System.out.println("Balance: " + balance);
+    }
 }

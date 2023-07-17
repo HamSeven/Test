@@ -1,34 +1,40 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package test_d210231c;
+package bank;
 
-/**
- *
- * @author User
- */
 
- public class CurrentAccount extends BankAccount {
-  private double overdraftLimit;
+public class CurrentAccount extends BankAccount {
+    private double overdraftLimit;
 
-  public CurrentAccount(int accountNumber, double balance, String accountHolderName, double overdraftLimit) {
-    super(accountNumber, balance, accountHolderName);
-    this.overdraftLimit = overdraftLimit;
-  }
-
-  public void withdraw(double amount) {
-    if (amount > this.balance + this.overdraftLimit) {
-      throw new IllegalArgumentException("Insufficient funds");
+    public CurrentAccount(String accountNumber, String accountHolder, double overdraftLimit) {
+        super(accountNumber, accountHolder);
+        this.overdraftLimit = overdraftLimit;
     }
 
-    if (amount > this.balance) {
-      double charge = amount * 0.03;
-      this.balance -= amount - charge;
-      this.overdraftLimit -= charge;
-    } else {
-      this.balance -= amount;
+    @Override
+    public void withdraw(double amount) {
+        double availableFunds = getBalance() + overdraftLimit;
+
+        if (amount <= availableFunds) {
+            if (amount <= getBalance()) {
+                super.withdraw(amount);
+            } else {
+                double excessWithdrawal = amount - getBalance();
+                double charge = excessWithdrawal * 0.03;
+                overdraftLimit -= (excessWithdrawal + charge);
+                super.withdraw(getBalance());
+                System.out.println("Overdraft amount: " + excessWithdrawal);
+                System.out.println("Charge: " + charge);
+            }
+        } else {
+            System.out.println("Exceeds overdraft limit!");
+        }
     }
-  }
-}   
+
+    public double getOverdraftLimit() {
+        return overdraftLimit;
+    }
+}
 
